@@ -5,6 +5,18 @@
  * Uses Hugging Face Inference API (FREE)
  */
 
+if (!process.env.HF_API_KEY) {
+  return {
+    explanation: "AI explanation unavailable (API key missing).",
+    recommendations: [
+      "Use strong passwords",
+      "Enable two-factor authentication",
+      "Monitor account activity"
+    ],
+    aiModel: "Fallback"
+  };
+}
+
 const fetch = require("node-fetch");
 const HF_API_KEY = process.env.HF_API_KEY;
 const HF_MODEL = "mistralai/Mistral-7B-Instruct-v0.2";
