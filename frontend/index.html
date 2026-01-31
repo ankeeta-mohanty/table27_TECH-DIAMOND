@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WatchDog - Know Who's Watching You</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Hero Section (Always Visible) -->
+    <section class="hero" id="heroSection">
+        <div class="logo">
+            <div class="lock-icon">🔒</div>
+            <span>WatchDog</span>
+        </div>
+        
+        <h1>Know Who's Watching You<br>Before It's Too Late</h1>
+        
+        <!-- Email Scan Form -->
+        <form class="email-form" id="scanForm">
+            <input 
+                type="email" 
+                class="email-input"
+                id="emailInput"
+                placeholder="Enter Your Email to Start Scan"
+                
+            />
+            <input
+                  type="text"
+                  class="email-input"
+                  id="phoneInput"
+                  placeholder="Enter Phone Number (optional)"
+            />
+
+            <input
+                  type="text"
+                  class="email-input"
+                  id="usernameInput"
+                  placeholder="Enter Username / UserID (optional)"
+            />
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                →
+            </button>
+        </form>
+
+        <p class="tagline">"Discover your digital exposure in 30 seconds"</p>
+        
+        <!-- Loading Indicator (Hidden by default) -->
+        <div class="loading-container" id="loadingContainer" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">🔍 Scanning your digital footprint with AI...</p>
+        </div>
+    </section>
+
+    <!-- Results Section (Hidden by default, shows after scan) -->
+    <section class="results-section" id="resultsSection" style="display: none;">
+        <div class="results-container">
+            
+            <!-- Scan Another Button (Top) -->
+            <div class="scan-another-top">
+                <button class="scan-another-btn" id="scanAnotherBtnTop">
+                    ← Scan Another Email
+                </button>
+            </div>
+
+            <!-- Email Summary Card -->
+            <div class="email-summary-card">
+                <div class="summary-line"></div>
+                <div class="summary-content">
+                    <p class="scanning-text">Scanned: <span class="email-highlight" id="emailDisplay">-</span></p>
+                    <p class="updated-text">Completed: <span class="time-highlight" id="timeDisplay">Just now</span></p>
+                </div>
+                <div class="summary-line"></div>
+            </div>
+
+            <!-- Risk Score Section -->
+            <div class="risk-score-section" id="riskScoreSection">
+                <div class="warning-icon" id="warningIcon">⚠️</div>
+                <h2 class="risk-score">Risk Score: <span class="score-number" id="scoreNumber">--</span>/100</h2>
+                <div class="risk-badge" id="riskBadge">ANALYZING...</div>
+                
+                <!-- AI Explanation -->
+                <div class="ai-explanation" id="aiExplanation" style="display: none;">
+                    <!-- Exposure Summary Section -->
+<div class="ai-explanation" id="exposureSummary" style="display: none;">
+    <div class="ai-badge">🛡️ Exposure Summary</div>
+    <h3 style="color:#f9fafb; margin:1rem 0;">Security Exposure Indicators</h3>
+
+    <div class="ai-factors">
+        <div class="factor-item">
+            <span class="factor-label">Platform Visibility</span>
+            <span class="factor-value" id="platformVisibility">-</span>
+        </div>
+
+        <div class="factor-item">
+            <span class="factor-label">Breach Exposure</span>
+            <span class="factor-value" id="breachExposure">-</span>
+        </div>
+
+        <div class="factor-item">
+            <span class="factor-label">Public Intelligence Presence</span>
+            <span class="factor-value" id="publicIntel">-</span>
+        </div>
+
+        <div class="factor-item">
+            <span class="factor-label">Overall Risk</span>
+            <span class="factor-value" id="overallRisk">-</span>
+        </div>
+    </div>
+</div>
+
+                    <div class="ai-badge">🤖 AI-Powered Analysis</div>
+                    <h3 style="color: #f9fafb; margin: 1rem 0;">Why This Risk Score?</h3>
+                    <p class="explanation-text" id="explanationText">-</p>
+                    
+                    <div class="ai-factors">
+                        <div class="factor-item">
+                            <span class="factor-label">Platforms Found</span>
+                            <span class="factor-value" id="platformCountDisplay">0</span>
+                        </div>
+                        <div class="factor-item">
+                            <span class="factor-label">Known Breaches</span>
+                            <span class="factor-value" id="breachCountDisplay">0</span>
+                        </div>
+                    </div>
+                    
+                    <p class="ai-model" id="aiModelDisplay">🤖 Analyzed by AI</p>
+                </div>
+            </div>
+
+            <!-- Platforms & Breaches Section -->
+            <div class="breaches-section">
+                <h2 class="section-heading">📱 Digital Footprint: <span class="breach-count" id="platformCount">0</span> Platforms</h2>
+                <div class="breaches-container" id="platformsContainer">
+                    <!-- Platform cards will be added by JavaScript -->
+                </div>
+            </div>
+
+            <!-- AI Recommendations Section -->
+            <div class="recommendations-section" id="recommendationsSection">
+                <h2 class="section-heading">✅ AI-Generated Recommendations</h2>
+                <div class="ai-badge" style="margin: 1rem 0;">🤖 Personalized Action Plan</div>
+                <div class="ai-recommendations" id="recommendationsContainer">
+                    <!-- Recommendations will be added by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Actions Footer -->
+            <div class="results-footer">
+                <button class="action-btn scan-btn" id="scanAnotherBtn">Scan Another Email</button>
+                <button class="action-btn download-btn" id="downloadBtn">Download Report</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Problem Statement Section -->
+    <section class="problem-section">
+        <h2 class="section-title">The Reality</h2>
+        <p class="problem-text">
+            Every day, your data is tracked by <span class="highlight">hundreds of websites</span>, 
+            exposed in data breaches, and monitored without your knowledge. 
+            Most people have no idea how exposed they really are.
+        </p>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-icon">1️⃣</div>
+                <h3 class="step-title">Enter Email</h3>
+                <p class="step-description">Simply provide your email address to begin the scan</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-icon">2️⃣</div>
+                <h3 class="step-title">AI Analyzes</h3>
+                <p class="step-description">Our AI system intelligently analyzes your digital footprint</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-icon">3️⃣</div>
+                <h3 class="step-title">Get AI Report</h3>
+                <p class="step-description">Receive AI-powered insights and recommendations instantly</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">Made for CHAKRAVYUH 1.0 | GITA Autonomous College</p>
+            <p class="footer-text"><span class="footer-team">Team WatchDog</span> | 2025</p>
+        </div>
+    </footer>
+
+    <!-- Link JavaScript -->
+<script type="module" src="script.js"></script>
+</body>
+</html>
