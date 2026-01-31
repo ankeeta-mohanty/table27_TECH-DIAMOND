@@ -12,8 +12,19 @@ const cors = require("cors");
 const axios = require("axios");
 
 // AI logic
-const { analyzeRisk } = require("./ai/analyzeRisk");
-
+const analyzeRisk = async ({ email, platforms, breaches }) => {
+  return {
+    riskScore: 42,
+    riskLevel: "MEDIUM",
+    explanation: "Risk calculated using OSINT signals (AI temporarily disabled).",
+    recommendations: [
+      "Enable two-factor authentication",
+      "Use unique passwords",
+      "Monitor your accounts regularly"
+    ],
+    aiModel: "disabled"
+  };
+};
 // ============================================
 // SERVER CONFIGURATION
 // ============================================
@@ -52,7 +63,7 @@ app.get("/api/health", (req, res) => {
   res.json({
     status: "OK",
     message: "🐕 WatchDog Backend is running",
-    aiEnabled: !!process.env.OPENAI_API_KEY,
+    aiEnabled: !!process.env.HF_API_KEY,
     timestamp: new Date().toISOString()
   });
 });
@@ -116,23 +127,29 @@ app.post("/api/scan-email", async (req, res) => {
     // RESPONSE TO FRONTEND
     // --------------------------------------------
     res.json({
-      success: true,
-      email,
-      timestamp: new Date().toISOString(),
+  success: true,
+  email,
+  timestamp: new Date().toISOString(),
 
-      platforms,
-      platformCount: platforms.length,
+  platforms,
+  platformCount: platforms.length,
 
-      breachCount: breaches.length,
+  riskScore,
+  riskLevel,
 
-      riskScore: aiAnalysis.riskScore,
-      riskLevel: aiAnalysis.riskLevel,
-      explanation: aiAnalysis.explanation,
-      recommendations: aiAnalysis.recommendations,
+  explanation:
+    aiResult?.explanation ||
+    "Your digital footprint was analyzed using OSINT and risk heuristics.",
 
-      aiPowered: true
-    });
+  recommendations:
+    aiResult?.recommendations || [
+      "Enable two-factor authentication",
+      "Avoid reusing usernames across platforms",
+      "Monitor for unusual account activity"
+    ],
 
+  aiModel: "WatchDog AI Engine"
+});
     console.log("✅ Scan completed\n");
 
   } catch (error) {
@@ -158,7 +175,7 @@ app.listen(PORT, () => {
 ║                                            ║
 ║   🚀 Status: RUNNING                       ║
 ║   🌐 URL: http://localhost:${PORT}         ║
-║   🤖 AI: ${process.env.OPENAI_API_KEY ? "ENABLED ✅" : "DISABLED ❌"}          ║
+║   🤖 AI: ${process.env.HF_API_KEY ? "ENABLED ✅" : "DISABLED ❌"}          ║
 ║                                            ║
 ║   Endpoints:                               ║
 ║   GET  /api/health                         ║
@@ -167,8 +184,7 @@ app.listen(PORT, () => {
 ╚════════════════════════════════════════════╝
   `);
 
-  if (!process.env.OPENAI_API_KEY) {
-    console.log("❌ OPENAI_API_KEY NOT FOUND");
-    console.log("   AI WILL NOT WORK UNTIL KEY IS SET\n");
-  }
-});
+ if (!process.env.HF_API_KEY) {
+  console.log("❌ HF_API_KEY NOT FOUND");
+  console.log("   AI WILL NOT WORK UNTIL KEY IS SET\n");
+}});
